@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.neusoft.springmvc.dao.UserDao" >
+  <resultMap id="BaseResultMap" type="edu.neusoft.springmvc.model.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+     username, password
+  </sql>
+  <select id="selectByUsernameAndPassword" parameterType="String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where username = #{username,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUsername" parameterType="String" resultMap="BaseResultMap">
+    select username from user
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
+   <select id="selectByuser" parameterType="String" resultMap="BaseResultMap">
+    select user from userinfo
+    where user = #{user,jdbcType=VARCHAR} 
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where username = #{username,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertByUsernameAndPassword" parameterType="edu.neusoft.springmvc.model.User" >
+    insert into user(username,password)
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByUsernameAndPassword"  parameterType="edu.neusoft.springmvc.model.User" >
+    update user set password= #{password,jdbcType=VARCHAR} where username=#{username,jdbcType=VARCHAR}
+  </update>
+  <insert id="insertuserinfo" parameterType="edu.neusoft.springmvc.model.User" >
+    insert into userinfo(name,sex,age,wr,image_path,user)
+    values (#{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},#{age,jdbcType=INTEGER},#{wr,jdbcType=VARCHAR},#{image_path,jdbcType=VARCHAR},#{user,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateuserinfo"  parameterType="edu.neusoft.springmvc.model.User" >
+    update userinfo set name=#{name,jdbcType=VARCHAR},sex=#{sex,jdbcType=VARCHAR},age=#{age,jdbcType=INTEGER},wr=#{wr,jdbcType=VARCHAR},image_path=#{image_path,jdbcType=VARCHAR} where user=#{user,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>
